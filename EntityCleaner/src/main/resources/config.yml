@@ -1,0 +1,3 @@
+cleanup-interval: 6000
+minimum-item-age: 3000
+broadcast-enabled: false
