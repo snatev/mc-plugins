@@ -3,7 +3,7 @@
 
 # 🌟 EntityCleaner
 
-**EntityCleaner** is a Minecraft server plugin designed to keep your worlds clean by periodically removing dropped items (entities) based on configurable criteria. The plugin provides flexible control over cleanup intervals, broadcasting cleanup warnings, and pausing or resuming the task as needed.
+**EntityCleaner** is designed to keep your worlds clean by periodically removing dropped items (entities) based on configurable criteria. The plugin provides flexible control over cleanup intervals, broadcasting cleanup warnings, and pausing or resuming the task as needed.
 
 </div>
 
