@@ -1,0 +1,10 @@
+version: 1.1
+api-version: 1.20
+name: XPOptimizer
+main: snatev.xpoptimizer.XPOptimizer
+
+commands:
+  xpo:
+    permission: xpoptimizer.command
+    description: Manage XP Optimizer
+    usage: /xpo <enable|disable|status>
