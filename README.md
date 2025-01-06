@@ -14,6 +14,7 @@ This repository contains a variety of my custom plugins developed to enhance and
 ## 📂 Available Plugins
 
 - **EntityCleaner** Automatically removes dropped items after a configurable time to keep your worlds clean.
+- **XPOptimizer**: Optimizes XP orbs by merging them to reduce lag in high-yield XP areas like farms.
 
 ---
 
