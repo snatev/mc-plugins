@@ -1,6 +1,5 @@
 package snatev.xpoptimizer;
 
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Listener;
@@ -12,12 +11,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class XPOptimizer extends JavaPlugin implements Listener {
     private boolean isEnabled = true;
 
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
+        getCommand("xpo").setTabCompleter(this);
+        getCommand("xpo").setExecutor(this);
         getLogger().info("<XPO> Enabled");
     }
 
@@ -47,8 +51,8 @@ public class XPOptimizer extends JavaPlugin implements Listener {
         int totalXP = baseOrb.getExperience();
 
         List<ExperienceOrb> nearbyOrbs = baseOrb.getWorld().getNearbyEntities(location, 3, 3, 3).stream()
-                .filter(entity -> entity instanceof ExperienceOrb).map(entity -> (ExperienceOrb) entity)
-                .filter(orb -> !orb.equals(baseOrb) && orb.isValid()).toList();
+            .filter(entity -> entity instanceof ExperienceOrb).map(entity -> (ExperienceOrb) entity)
+            .filter(orb -> !orb.equals(baseOrb) && orb.isValid()).toList();
 
         for (ExperienceOrb orb : nearbyOrbs) {
             totalXP += orb.getExperience();
@@ -66,23 +70,42 @@ public class XPOptimizer extends JavaPlugin implements Listener {
                 return true;
             }
 
-            if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("enable")) {
-                    sender.sendMessage("§a<XPO> Enabled");
-                    isEnabled = true; return true;
-                } else if (args[0].equalsIgnoreCase("disable")) {
-                    sender.sendMessage("§e<XPO> Disabled");
-                    isEnabled = false; return true;
-                }  else if (args[0].equalsIgnoreCase("status")) {
-                    sender.sendMessage("§b<XPO> Is " + (isEnabled ? "Enabled" : "Disabled"));
-                    return true;
-                }
+            if (args.length == 0) {
+                sender.sendMessage("§c/xpo <enable|disable|status>");
+                return true;
             }
 
-            sender.sendMessage("§c/xpo <enable|disable|status>");
+            switch (args[0].toLowerCase()) {
+                case "enable":
+                    sender.sendMessage("§a<XPO> Enabled");
+                    isEnabled = true; break;
+                case "disable":
+                    sender.sendMessage("§e<XPO> Disabled");
+                    isEnabled = false; break;
+                case "status":
+                    sender.sendMessage("§b<XPO> Is " + (isEnabled ? "Enabled" : "Disabled"));
+                    break;
+                default:
+                    sender.sendMessage("§c/xpo <enable|disable|status>");
+                    break;
+            }
+
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
+
+        if (args.length == 1) {
+            completions.add("enable");
+            completions.add("disable");
+            completions.add("status");
+        }
+
+        return completions;
     }
 }

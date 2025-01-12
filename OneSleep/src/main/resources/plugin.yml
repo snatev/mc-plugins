@@ -1,0 +1,10 @@
+version: 1.1
+api-version: 1.20
+name: OneSleep
+main: snatev.onesleep.OneSleep
+
+commands:
+  osl:
+    permission: onesleep.command
+    description: Manage One Sleep
+    usage: /osl <enable|disable|status|phantom>

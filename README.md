@@ -13,8 +13,10 @@ This repository contains a variety of my custom plugins developed to enhance and
 
 ## 📂 Available Plugins
 
-- **EntityCleaner** Automatically removes dropped items after a configurable time to keep your worlds clean.
+- **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
 - **XPOptimizer**: Optimizes XP orbs by merging them to reduce lag in high-yield XP areas like farms.
+- **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
+- **EndermanGuard**: Prevents Endermen from teleporting to restricted blocks or in disallowed worlds, addressing a known bug.
 
 ---
 

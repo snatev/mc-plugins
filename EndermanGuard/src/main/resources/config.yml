@@ -1,0 +1,5 @@
+allowed-worlds:
+  - world_the_end
+
+kill-blocks:
+  - CHERRY_LEAVES
