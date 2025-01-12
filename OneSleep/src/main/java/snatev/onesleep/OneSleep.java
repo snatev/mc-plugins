@@ -100,9 +100,10 @@ public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
                         default:
                             sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>");
                             break;
+                    }
 
                     break;
-                default:  sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>");
+                default:  sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>"); break;
             }
         }
 
