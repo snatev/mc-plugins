@@ -2,3 +2,9 @@ version: 1.1
 api-version: 1.20
 name: EndermanGuard
 main: snatev.endermanguard.EndermanGuard
+
+commands:
+  eg:
+    permission: endermanguard.command
+    description: Manage EndermanGuard
+    usage: /eg <enable|disable|status|reload>
