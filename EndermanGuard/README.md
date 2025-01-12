@@ -39,20 +39,7 @@ kill-blocks:
 
 ### 🔧 Configuration Options
 - **`allowed-worlds`** A list of worlds where EndermanGuard is active.
-  Example:
-  ```yaml
-  allowed-worlds:
-    - world
-    - world_nether
-  ```
-
 - **`kill-blocks`** A list of block types where Endermen are not allowed to teleport.
-  Example:
-  ```yaml
-  kill-blocks:
-    - diamond_block
-    - emerald_block
-  ```
 
 ---
 

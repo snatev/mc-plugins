@@ -11,8 +11,8 @@
 
 ## ✨ Features
 
-- 🌧️ **Weather Control** Automatically clears rain and thunderstorms when skipping the night.
 - 🌙 **Skip the Night** A single player sleeping is enough to transition the server to daytime.
+- 🌧️ **Weather Control** Automatically clears rain and thunderstorms when skipping the night.
 - 🛏️ **Phantom Reset Control** Manage phantom reset behavior for individual players or globally.
 - 🔧 **Flexible Commands** Enable, disable, and check the plugin's status, and configure phantom reset behavior.
 
