@@ -1,0 +1,2 @@
+allowed-ips: []
+deny-message: "IP Not Allowed"
