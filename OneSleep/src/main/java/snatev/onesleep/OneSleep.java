@@ -1,5 +1,8 @@
 package snatev.onesleep;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.bukkit.World;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,30 +14,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
     private boolean isEnabled = true;
-    private boolean resetPhantomForAll = false;
+    private boolean resetPhantomForAll = true;
 
     @Override
     public void onEnable() {
-        if (getCommand("osl") == null) {
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("osl").setTabCompleter(this);
         getCommand("osl").setExecutor(this);
-
-        getLogger().info("<OSL> Enabled");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("<OSL> Disabled");
     }
 
     @EventHandler
@@ -46,9 +34,9 @@ public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
 
         Bukkit.getScheduler().runTaskLater(this, () -> {
             if (world.getTime() >= 12541 && world.getTime() <= 23458) {
-                world.setTime(0);
-                world.setStorm(false);
                 world.setThundering(false);
+                world.setStorm(false);
+                world.setTime(0);
 
                 if (resetPhantomForAll) {
                     for (Player p : world.getPlayers()) {
@@ -61,49 +49,26 @@ public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("osl")) {
-            if (!sender.isOp()) {
-                sender.sendMessage("§c<OSL> Insufficient Permissions");
-                return true;
-            }
-
-            if (args.length == 0) {
-                sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>");
-                return true;
-            }
+            if (!sender.isOp()) { sender.sendMessage("§c<OSL> Insufficient Permissions"); return true; }
+            if (args.length == 0) { sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable":
-                    sender.sendMessage("§a<OSL> Enabled");
-                    isEnabled = true; break;
-                case "disable":
-                    sender.sendMessage("§e<OSL> Disabled");
-                    isEnabled = false; break;
-                case "status":
-                    sender.sendMessage("§b<OSL> Is " + (isEnabled ? "Enabled" : "Disabled"));
-                    break;
+                case "enable": sender.sendMessage("§a<OSL> Enabled"); isEnabled = true; break;
+                case "disable": sender.sendMessage("§e<OSL> Disabled"); isEnabled = false; break;
+                case "status": sender.sendMessage("§b<OSL> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
+
                 case "phantom":
-                    if (args.length < 2) {
-                        sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>");
-                        return true;
-                    }
+                    if (args.length < 2) { sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>"); return true; }
 
                     switch (args[1].toLowerCase()) {
-                        case "enable":
-                            sender.sendMessage("§a<OSL> Phantom Reset Enabled");
-                            resetPhantomForAll = true; break;
-                        case "disable":
-                            sender.sendMessage("§e<OSL> Phantom Reset Disabled");
-                            resetPhantomForAll = false; break;
-                        case "status":
-                            sender.sendMessage("§b<OSL> Phantom Reset Is " + (resetPhantomForAll ? "Enabled" : "Disabled"));
-                            break;
-                        default:
-                            sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>");
-                            break;
+                        case "enable": sender.sendMessage("§a<OSL> Phantom Reset Enabled"); resetPhantomForAll = true; break;
+                        case "disable": sender.sendMessage("§e<OSL> Phantom Reset Disabled"); resetPhantomForAll = false; break;
+                        case "status": sender.sendMessage("§b<OSL> Phantom Reset Is " + (resetPhantomForAll ? "Enabled" : "Disabled")); break;
+                        default: sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>"); break;
                     }
 
                     break;
-                default:  sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>"); break;
+                default: sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>"); break;
             }
         }
 

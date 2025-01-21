@@ -1,5 +1,8 @@
 package snatev.xpoptimizer;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Listener;
@@ -11,9 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
-import java.util.List;
-import java.util.ArrayList;
-
 public class XPOptimizer extends JavaPlugin implements Listener {
     private boolean isEnabled = true;
 
@@ -22,12 +22,6 @@ public class XPOptimizer extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         getCommand("xpo").setTabCompleter(this);
         getCommand("xpo").setExecutor(this);
-        getLogger().info("<XPO> Enabled");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("<XPO> Disabled");
     }
 
     @EventHandler
@@ -65,35 +59,18 @@ public class XPOptimizer extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("xpo")) {
-            if (!sender.isOp()) {
-                sender.sendMessage("§c<XPO> Insufficient Permissions");
-                return true;
-            }
-
-            if (args.length == 0) {
-                sender.sendMessage("§c/xpo <enable|disable|status>");
-                return true;
-            }
+            if (!sender.isOp()) { sender.sendMessage("§c<XPO> Insufficient Permissions"); return true; }
+            if (args.length == 0) { sender.sendMessage("§c<XPO> /xpo <enable|disable|status>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable":
-                    sender.sendMessage("§a<XPO> Enabled");
-                    isEnabled = true; break;
-                case "disable":
-                    sender.sendMessage("§e<XPO> Disabled");
-                    isEnabled = false; break;
-                case "status":
-                    sender.sendMessage("§b<XPO> Is " + (isEnabled ? "Enabled" : "Disabled"));
-                    break;
-                default:
-                    sender.sendMessage("§c/xpo <enable|disable|status>");
-                    break;
+                case "enable": sender.sendMessage("§a<XPO> Enabled"); isEnabled = true; break;
+                case "disable": sender.sendMessage("§e<XPO> Disabled"); isEnabled = false; break;
+                case "status": sender.sendMessage("§b<XPO> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
+                default: sender.sendMessage("§c<XPO> /xpo <enable|disable|status>"); break;
             }
 
             return true;
-        }
-
-        return false;
+        } return false;
     }
 
     @Override

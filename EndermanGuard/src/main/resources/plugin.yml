@@ -4,7 +4,7 @@ name: EndermanGuard
 main: snatev.endermanguard.EndermanGuard
 
 commands:
-  eg:
+  emg:
     permission: endermanguard.command
     description: Manage EndermanGuard
-    usage: /eg <enable|disable|status|reload>
+    usage: /emg <enable|disable|status|reload>

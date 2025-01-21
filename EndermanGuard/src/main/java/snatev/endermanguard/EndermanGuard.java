@@ -1,11 +1,16 @@
 package snatev.endermanguard;
 
+import java.util.Set;
+import java.util.List;
+import java.util.HashSet;
+import java.util.ArrayList;
+
 import org.bukkit.World;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.command.Command;
 import org.bukkit.event.Listener;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Enderman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.command.TabExecutor;
@@ -15,15 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Set;
-import java.util.List;
-import java.util.HashSet;
-import java.util.ArrayList;
-
 public class EndermanGuard extends JavaPlugin implements Listener {
     private Set<String> allowedWorlds = new HashSet<>();
     private Set<Material> killBlocks = new HashSet<>();
-    private boolean isEnabled = true;
+    private boolean isEnabled = false;
 
     @Override
     public void onEnable() {
@@ -33,12 +33,6 @@ public class EndermanGuard extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         getCommand("eg").setTabCompleter(this);
         getCommand("eg").setExecutor(this);
-        getLogger().info("<EG> Enabled");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("<EG> Disabled");
     }
 
     @EventHandler
@@ -54,7 +48,6 @@ public class EndermanGuard extends JavaPlugin implements Listener {
                 public void run() {
                     Block block = event.getTo().getBlock();
                     Material blockType = block.getType();
-
                     if (killBlocks.contains(blockType)) enderman.remove();
                 }
             }.runTaskLater(this, 1L);
@@ -76,7 +69,7 @@ public class EndermanGuard extends JavaPlugin implements Listener {
                 try {
                     Material material = Material.valueOf(blockName.toUpperCase());
                     killBlocks.add(material);
-                } catch (IllegalArgumentException e) { getLogger().warning("<EG> Invalid Block " + blockName); }
+                } catch (IllegalArgumentException e) { getLogger().warning("<EMG> Invalid Block " + blockName); }
             }
         }
     }
@@ -84,38 +77,21 @@ public class EndermanGuard extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("eg")) {
-            if (!sender.isOp()) {
-                sender.sendMessage("§c<EG> Insufficient Permissions");
-                return true;
-            }
-
-            if (args.length == 0) {
-                sender.sendMessage("§c/eg <enable|disable|status|reload>");
-                return true;
-            }
+            if (!sender.isOp()) { sender.sendMessage("§c<EMG> Insufficient Permissions"); return true; }
+            if (args.length == 0) { sender.sendMessage("§c/emg <enable|disable|status|reload>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable":
-                    sender.sendMessage("§a<EG> Enabled");
-                    isEnabled = true; break;
-                case "disable":
-                    sender.sendMessage("§e<EG> Disabled");
-                    isEnabled = false; break;
-                case "status":
-                    sender.sendMessage("§b<EG> Is " + (isEnabled ? "Enabled" : "Disabled"));
-                    break;
+                case "enable": sender.sendMessage("§a<EMG> Enabled"); isEnabled = true; break;
+                case "disable": sender.sendMessage("§e<EMG> Disabled"); isEnabled = false; break;
+                case "status": sender.sendMessage("§b<EMG> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
                 case "reload":
-                    sender.sendMessage("§a<EG> Configuration Reloaded");
+                    sender.sendMessage("§a<EMG> Configuration Reloaded");
                     reloadConfig(); loadConfig(); break;
-                default:
-                    sender.sendMessage("§c/eg <enable|disable|status|reload>");
-                    break;
+                default: sender.sendMessage("§c<EMG> /emg <enable|disable|status|reload>"); break;
             }
 
             return true;
-        }
-
-        return false;
+        } return false;
     }
 
     @Override

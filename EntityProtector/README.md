@@ -11,8 +11,8 @@
 
 ## ✨ Features
 
-- 🚫 **Prevent Enderman Block Pickup** Stop Endermen from removing blocks in your world.
 - 💥 **Disable Creeper Explosions** Protect your structures from Creeper explosions.
+- 🚫 **Prevent Enderman Block Pickup** Stop Endermen from removing blocks in your world.
 - 🔧 **Lightweight and Efficient** Designed for seamless integration without performance issues.
 
 ---
@@ -21,6 +21,6 @@
 
 ## ⚙️ How It Works
 
-1. 🛡️ The plugin listens for specific entity events (Enderman block pickup and Creeper explosions).
-2. 🚫 These events are canceled automatically, ensuring your world remains untouched by these actions.
-3. ✅ The plugin requires no additional configuration and works out-of-the-box.
+1. ✅ The plugin requires no additional configuration and works out-of-the-box.
+2. 🛡️ The plugin listens for specific entity events (Enderman block pickup and Creeper explosions).
+3. 🚫 These events are canceled automatically, ensuring your world remains untouched by these actions.

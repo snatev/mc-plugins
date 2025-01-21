@@ -4,7 +4,7 @@ name: EntityCleaner
 main: snatev.entity_cleaner.EntityCleaner
 
 commands:
-  ec:
+  ecl:
     permission: entitycleaner.command
     description: Manage EntityCleaner
-    usage: /ec <pause|resume|status|broadcast|reload>
+    usage: /ecl <pause|resume|status|broadcast|reload>

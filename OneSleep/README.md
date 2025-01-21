@@ -26,6 +26,7 @@
 - ✅ **`/osl enable`** Enable the OneSleep functionality.
 - 🚫 **`/osl disable`** Disable the OneSleep functionality.
 - 🟢 **`/osl status`** Check whether the OneSleep functionality is currently enabled or disabled.
+
 - 👻 **`/osl phantom <enable|disable|status>`** Manage phantom reset behavior:
   - **`enable`** Enable phantom resets for all players when skipping the night.
   - **`disable`** Disable phantom resets for all players when skipping the night.

@@ -9,15 +9,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 
 public class EntityProtector extends JavaPlugin implements Listener {
     @Override
-    public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-        getLogger().info("<EP> Enabled");
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("<EP> Disabled");
-    }
+    public void onEnable() { Bukkit.getPluginManager().registerEvents(this, this); }
 
     @EventHandler
     public void onEndermanBlockPickup(EntityChangeBlockEvent event) {

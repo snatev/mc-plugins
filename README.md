@@ -1,11 +1,9 @@
 
 <div align="center">
 
-
-
 # 🛠️ Minecraft Plugin Collection
 
-This repository contains a variety of my custom plugins developed to enhance and manage Minecraft servers efficiently. Each plugin is designed to address specific needs, whether it's managing player interactions, or automating server tasks.
+This repository contains a variety of my custom plugins developed to enhance and manage Minecraft servers efficiently. Each plugin is designed to address specific needs, whether it's managing player interactions, or automating server tasks. The created plugins tested on 1.21.3 - 1.21.4
 
 </div>
 
@@ -13,10 +11,13 @@ This repository contains a variety of my custom plugins developed to enhance and
 
 ## 📂 Available Plugins
 
-- **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
 - **XPOptimizer**: Optimizes XP orbs by merging them to reduce lag in high-yield XP areas like farms.
-- **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
 - **EndermanGuard**: Prevents Endermen from teleporting to restricted blocks or in disallowed worlds.
+- **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
+- **IPWhitelist**: Whitelists players based on their IP address to prevent unauthorized access to your server.
+- **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
+- **EntityProtector**: Safeguards your worlds by preventing specific entity actions such as block pickup or explosions.
+
 
 ---
 
@@ -34,4 +35,4 @@ This repository contains a variety of my custom plugins developed to enhance and
 
 ## 📜 License
 
-The plugins is provided as-is with no guarantees, if you need help or other custom plugins, feel free to contact me.
+The plugins is provided as-is with no guarantees, if you need help feel free to contact me.
