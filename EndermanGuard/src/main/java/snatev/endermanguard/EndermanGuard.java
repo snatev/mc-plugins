@@ -31,8 +31,8 @@ public class EndermanGuard extends JavaPlugin implements Listener {
         loadConfig();
 
         Bukkit.getPluginManager().registerEvents(this, this);
-        getCommand("eg").setTabCompleter(this);
-        getCommand("eg").setExecutor(this);
+        getCommand("emg").setTabCompleter(this);
+        getCommand("emg").setExecutor(this);
     }
 
     @EventHandler
@@ -76,7 +76,7 @@ public class EndermanGuard extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("eg")) {
+        if (command.getName().equalsIgnoreCase("emg")) {
             if (!sender.isOp()) { sender.sendMessage("§c<EMG> Insufficient Permissions"); return true; }
             if (args.length == 0) { sender.sendMessage("§c/emg <enable|disable|status|reload>"); return true; }
 
