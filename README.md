@@ -13,10 +13,10 @@ This repository contains a variety of my custom plugins developed to enhance and
 
 - **XPOptimizer**: Optimizes XP orbs by merging them to reduce lag in high-yield XP areas like farms.
 - **EndermanGuard**: Prevents Endermen from teleporting to restricted blocks or in disallowed worlds.
-- **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
 - **IPWhitelist**: Whitelists players based on their IP address to prevent unauthorized access to your server.
-- **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
+- **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
 - **ForceSkins**: Enforces the use of official Mojang skins, ensuring all players display their real Minecraft skins.
+- **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
 - **EntityProtector**: Safeguards your worlds by preventing specific entity actions such as block pickup or explosions.
 
 ---
