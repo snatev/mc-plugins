@@ -16,8 +16,8 @@ This repository contains a variety of my custom plugins developed to enhance and
 - **EntityCleaner**: Automatically removes dropped items after a configurable time to keep your worlds clean.
 - **IPWhitelist**: Whitelists players based on their IP address to prevent unauthorized access to your server.
 - **OneSleep**: Allows one player to skip the night in multiplayer servers, with configurable phantom reset options.
+- **ForceSkins**: Enforces the use of official Mojang skins, ensuring all players display their real Minecraft skins.
 - **EntityProtector**: Safeguards your worlds by preventing specific entity actions such as block pickup or explosions.
-
 
 ---
 

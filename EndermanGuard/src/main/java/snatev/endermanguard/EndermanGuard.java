@@ -23,7 +23,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class EndermanGuard extends JavaPlugin implements Listener {
     private Set<String> allowedWorlds = new HashSet<>();
     private Set<Material> killBlocks = new HashSet<>();
-    private boolean isEnabled = false;
+    private boolean isEnabled;
 
     @Override
     public void onEnable() {
@@ -33,6 +33,11 @@ public class EndermanGuard extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
         getCommand("emg").setTabCompleter(this);
         getCommand("emg").setExecutor(this);
+    }
+
+    private void saveConfigState() {
+        getConfig().set("enabled", isEnabled);
+        saveConfig();
     }
 
     @EventHandler
@@ -56,6 +61,7 @@ public class EndermanGuard extends JavaPlugin implements Listener {
 
     private void loadConfig() {
         FileConfiguration config = getConfig();
+        isEnabled = config.getBoolean("enabled", true);
 
         allowedWorlds.clear();
         List<String> worldList = config.getStringList("allowed-worlds");
@@ -81,8 +87,12 @@ public class EndermanGuard extends JavaPlugin implements Listener {
             if (args.length == 0) { sender.sendMessage("§c/emg <enable|disable|status|reload>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable": sender.sendMessage("§a<EMG> Enabled"); isEnabled = true; break;
-                case "disable": sender.sendMessage("§e<EMG> Disabled"); isEnabled = false; break;
+                case "enable":
+                    sender.sendMessage("§a<EMG> Enabled");
+                    isEnabled = true; saveConfigState(); break;
+                case "disable":
+                    sender.sendMessage("§e<EMG> Disabled");
+                    isEnabled = false; saveConfigState(); break;
                 case "status": sender.sendMessage("§b<EMG> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
                 case "reload":
                     sender.sendMessage("§a<EMG> Configuration Reloaded");

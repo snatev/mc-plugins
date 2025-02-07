@@ -13,16 +13,28 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
-    private boolean isEnabled = true;
-    private boolean resetPhantomForAll = true;
+    private boolean isEnabled;
+    private boolean resetPhantomForAll;
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+        FileConfiguration config = getConfig();
+        isEnabled = config.getBoolean("enabled", true);
+        resetPhantomForAll = config.getBoolean("resetPhantomForAll", true);
+
         getServer().getPluginManager().registerEvents(this, this);
         getCommand("osl").setTabCompleter(this);
         getCommand("osl").setExecutor(this);
+    }
+
+    private void saveConfigState() {
+        getConfig().set("resetPhantomForAll", resetPhantomForAll);
+        getConfig().set("enabled", isEnabled);
+        saveConfig();
     }
 
     @EventHandler
@@ -53,16 +65,24 @@ public class OneSleep extends JavaPlugin implements Listener, TabExecutor {
             if (args.length == 0) { sender.sendMessage("§c<OSL> /osl <enable|disable|status|phantom>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable": sender.sendMessage("§a<OSL> Enabled"); isEnabled = true; break;
-                case "disable": sender.sendMessage("§e<OSL> Disabled"); isEnabled = false; break;
+                case "enable":
+                    sender.sendMessage("§a<OSL> Enabled");
+                    isEnabled = true; saveConfigState(); break;
+                case "disable":
+                    sender.sendMessage("§e<OSL> Disabled");
+                    isEnabled = false; saveConfigState(); break;
                 case "status": sender.sendMessage("§b<OSL> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
 
                 case "phantom":
                     if (args.length < 2) { sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>"); return true; }
 
                     switch (args[1].toLowerCase()) {
-                        case "enable": sender.sendMessage("§a<OSL> Phantom Reset Enabled"); resetPhantomForAll = true; break;
-                        case "disable": sender.sendMessage("§e<OSL> Phantom Reset Disabled"); resetPhantomForAll = false; break;
+                        case "enable":
+                            sender.sendMessage("§a<OSL> Phantom Reset Enabled");
+                            resetPhantomForAll = true; saveConfigState(); break;
+                        case "disable":
+                            sender.sendMessage("§e<OSL> Phantom Reset Disabled");
+                            resetPhantomForAll = false; saveConfigState(); break;
                         case "status": sender.sendMessage("§b<OSL> Phantom Reset Is " + (resetPhantomForAll ? "Enabled" : "Disabled")); break;
                         default: sender.sendMessage("§c<OSL> /osl phantom <enable|disable|status>"); break;
                     }

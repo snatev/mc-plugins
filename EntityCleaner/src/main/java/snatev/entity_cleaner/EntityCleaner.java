@@ -11,26 +11,39 @@ import org.bukkit.command.Command;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class EntityCleaner extends JavaPlugin {
     private BukkitTask cleanupTask;
 
-    private long minItemAge = 3000;
-    private boolean isPaused = false;
-    private long cleanupInterval = 6000;
-    private boolean isBroadcastEnabled = false;
+    private long minItemAge;
+    private boolean isPaused;
+    private long cleanupInterval;
+    private boolean isBroadcastEnabled;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
-        isBroadcastEnabled = getConfig().getBoolean("broadcast-enabled", false);
-        cleanupInterval = getConfig().getLong("cleanup-interval", 6000);
-        minItemAge = getConfig().getLong("minimum-item-age", 3000);
+        loadConfig();
 
         getCommand("ecl").setTabCompleter(this);
         getCommand("ecl").setExecutor(this);
         startCleanupTask();
+    }
+
+    private void loadConfig() {
+        FileConfiguration config = getConfig();
+
+        isBroadcastEnabled = config.getBoolean("broadcast-enabled", false);
+        cleanupInterval = config.getLong("cleanup-interval", 6000);
+        minItemAge = config.getLong("minimum-item-age", 3000);
+        isPaused = config.getBoolean("paused", false);
+    }
+
+    private void saveConfigState() {
+        getConfig().set("broadcast-enabled", isBroadcastEnabled);
+        getConfig().set("paused", isPaused);
+        saveConfig();
     }
 
     @Override
@@ -65,18 +78,26 @@ public class EntityCleaner extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("ecl")) {
             if (!sender.isOp()) { sender.sendMessage("§c<ECL> Insufficient Permissions"); return true; }
-            if (args.length == 0) { sender.sendMessage("§c<ECL> /ecll <pause|resume|status|broadcast|reload>"); return true; }
+            if (args.length == 0) { sender.sendMessage("§c<ECL> /ecl <pause|resume|status|broadcast|reload>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "pause": sender.sendMessage("§e<ECL> Paused"); isPaused = true; break;
-                case "resume": sender.sendMessage("§a<ECL> Resumed"); isPaused = false; break;
+                case "pause":
+                    sender.sendMessage("§e<ECL> Paused");
+                    isPaused = true; saveConfigState(); break;
+                case "resume":
+                    sender.sendMessage("§a<ECL> Resumed");
+                    isPaused = false; saveConfigState(); break;
                 case "status":  sender.sendMessage("§b<ECL> Is " + (isPaused ? "Paused" : "Running")); break;
 
                 case "broadcast":
                     if (args.length > 1) {
                         switch (args[1].toLowerCase()) {
-                            case "enable": sender.sendMessage("§a<ECL> Broadcast Enabled"); isBroadcastEnabled = true; break;
-                            case "disable": sender.sendMessage("§e<ECL> Broadcast Disabled"); isBroadcastEnabled = false; break;
+                            case "enable":
+                                sender.sendMessage("§a<ECL> Broadcast Enabled");
+                                isBroadcastEnabled = true; saveConfigState(); break;
+                            case "disable":
+                                sender.sendMessage("§e<ECL> Broadcast Disabled");
+                                isBroadcastEnabled = false; saveConfigState(); break;
                             case "status": sender.sendMessage("§b<ECL> Broadcast Is " + (isBroadcastEnabled ? "Enabled" : "Disabled")); break;
                             default: sender.sendMessage("§c<ECL> /ecl broadcast <enable|disable|status>"); break;
                         }
@@ -85,6 +106,8 @@ public class EntityCleaner extends JavaPlugin {
 
                 case "reload":
                     reloadConfig();
+                    loadConfig();
+
                     sender.sendMessage("§a<ECL> Configuration Reloaded");
                     minItemAge = getConfig().getLong("minimum-item-age", 3000);
                     cleanupInterval = getConfig().getLong("cleanup-interval", 6000);

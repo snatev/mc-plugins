@@ -7,4 +7,4 @@ commands:
   ipw:
     permission: ipwhitelist.command
     description: Manage IPWhitelist
-    usage: /ipw <reload|list>
+    usage: /ipw <enable|disable|status|reload|list>

@@ -17,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class IPWhitelist extends JavaPlugin implements Listener, TabExecutor {
     private List<String> allowedIPs;
     private String denyMessage;
+    private boolean isEnabled;
 
     @Override
     public void onEnable() {
@@ -28,14 +29,22 @@ public class IPWhitelist extends JavaPlugin implements Listener, TabExecutor {
         getCommand("ipw").setExecutor(this);
     }
 
+    private void saveConfigState() {
+        getConfig().set("enabled", isEnabled);
+        saveConfig();
+    }
+
     private void loadConfig() {
         FileConfiguration config = getConfig();
+        isEnabled = config.getBoolean("enabled", true);
         allowedIPs = config.getStringList("allowed-ips");
         denyMessage = config.getString("deny-message", "Not Allowed IP");
     }
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
+        if (!isEnabled) return;
+
         String playerIP = event.getAddress().getHostAddress();
         if (!allowedIPs.contains(playerIP)) event.disallow(PlayerLoginEvent.Result.KICK_OTHER, denyMessage);
     }
@@ -47,16 +56,22 @@ public class IPWhitelist extends JavaPlugin implements Listener, TabExecutor {
             if (args.length == 0) { sender.sendMessage("§c<IPW> /ipw <reload|list>"); return true; }
 
             switch (args[0].toLowerCase()) {
+                case "enable":
+                    sender.sendMessage("§a<IPW> Enabled");
+                    isEnabled = true; saveConfigState(); break;
+                case "disable":
+                    sender.sendMessage("§e<IPW> Disabled");
+                    isEnabled = false; saveConfigState(); break;
+                case "status":
+                    sender.sendMessage("§b<IPW> Is " + (isEnabled ? "Enabled" : "Disabled"));
+                    break;
                 case "reload":
-                    reloadConfig();
-                    loadConfig();
+                    reloadConfig(); loadConfig();
                     sender.sendMessage("§a<IPW> Configuration Reloaded");
                     break;
-
                 case "list":
-                    sender.sendMessage("§a<IPW> Allowed IPs");
                     allowedIPs.forEach(ip -> sender.sendMessage(" - §b" + ip));
-                    break;
+                    sender.sendMessage("§a<IPW> Allowed IPs"); break;
 
                 default: sender.sendMessage("§c<IPW> /ipw <reload|list>"); break;
             }

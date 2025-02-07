@@ -15,13 +15,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class XPOptimizer extends JavaPlugin implements Listener {
-    private boolean isEnabled = true;
+    private boolean isEnabled;
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+        isEnabled = getConfig().getBoolean("enabled", false);
+
         Bukkit.getPluginManager().registerEvents(this, this);
         getCommand("xpo").setTabCompleter(this);
         getCommand("xpo").setExecutor(this);
+    }
+
+    private void saveConfigState() {
+        getConfig().set("enabled", isEnabled);
+        saveConfig();
     }
 
     @EventHandler
@@ -63,8 +71,12 @@ public class XPOptimizer extends JavaPlugin implements Listener {
             if (args.length == 0) { sender.sendMessage("§c<XPO> /xpo <enable|disable|status>"); return true; }
 
             switch (args[0].toLowerCase()) {
-                case "enable": sender.sendMessage("§a<XPO> Enabled"); isEnabled = true; break;
-                case "disable": sender.sendMessage("§e<XPO> Disabled"); isEnabled = false; break;
+                case "enable":
+                    sender.sendMessage("§a<XPO> Enabled");
+                    isEnabled = true; saveConfigState(); break;
+                case "disable":
+                    sender.sendMessage("§e<XPO> Disabled");
+                    isEnabled = false; saveConfigState();break;
                 case "status": sender.sendMessage("§b<XPO> Is " + (isEnabled ? "Enabled" : "Disabled")); break;
                 default: sender.sendMessage("§c<XPO> /xpo <enable|disable|status>"); break;
             }

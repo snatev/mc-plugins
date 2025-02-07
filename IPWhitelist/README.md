@@ -42,7 +42,10 @@ deny-message: "Not Allowed IP"
 
 ## 🛠️ Commands
 
-### `/ipwl <reload|list>`
+### `/ipwl <enable|disable|statusreload|list>`
+- 🟢 **`/ipwl enable`** Enable the IP whitelist feature.
+- 🔴 **`/ipwl disable`** Disable the IP whitelist feature.
+- 🟠 **`/ipwl status`** Display the current status of the IP whitelist.
 - 🔄 **`/ipwl reload`** Reload the plugin configuration from `config.yml`.
 - 📜 **`/ipwl list`** Display the list of currently whitelisted IPs.
 
