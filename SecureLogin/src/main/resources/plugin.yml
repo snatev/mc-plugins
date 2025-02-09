@@ -1,0 +1,17 @@
+version: 1.0
+api-version: 1.20
+name: SecureLogin
+main: snatev.securelogin.SecureLogin
+
+commands:
+  register:
+    usage: /register <password>
+    description: Register Account
+
+  login:
+    usage: /login <password>
+    description: Login To Account
+
+  sec:
+    usage: /sec <enable|disable|status>
+    description: Manage SecureLogin

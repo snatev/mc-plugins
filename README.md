@@ -11,6 +11,7 @@ This repository contains a variety of my custom plugins developed to enhance and
 
 ## 📂 Available Plugins
 
+- **SecureLogin**: Adds an extra layer of protection to prevent unauthorized access to your server.
 - **XPOptimizer**: Optimizes XP orbs by merging them to reduce lag in high-yield XP areas like farms.
 - **EndermanGuard**: Prevents Endermen from teleporting to restricted blocks or in disallowed worlds.
 - **IPWhitelist**: Whitelists players based on their IP address to prevent unauthorized access to your server.
