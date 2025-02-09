@@ -12,8 +12,8 @@
 
 - 🔑 **Player Authentication** - Players must log in with a password before playing.
 - ❌ **Blacklist Failed Logins** - Repeated failed attempts will blacklist the player's IP.
-- 🚫 **Prevent Movement & Chat** - Blocks players from moving or chatting before logging in.
 - 📂 **Persistent Storage** - User credentials and settings are stored securely in a config file.
+- 🚫 **Prevent Movement & Chat** - Blocks players from moving or chatting before logging in.
 - 🔧 **Lightweight & Efficient** - Designed for smooth operation with minimal performance impact.
 - 🛡️ **Auto Login with IP** - If a player logs in successfully, their IP is saved for faster authentication on future joins.
 
@@ -36,7 +36,7 @@
 ## 📜 Commands & Permissions
 
 | Command | Description |
-|---------|-------------|------------|
+|---------|-------------|
 | `/register <password>` | Registers a new player
 | `/login <password>` | Logs in an existing player
 | `/sec enable` | Enables registration
